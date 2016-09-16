@@ -1,19 +1,24 @@
 {
   "name": "lookup",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Lookup information on any topic",
-  "main": "index.js",
+  "main": "lookup.js",
+  "bin": {
+    "lookup": "./cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Fredrik Söderström <fredrik.soderstrom@mojlighetsministeriet.se>",
   "license": "GPL-3.0",
   "dependencies": {
-    "cached-request": "^1.0.0",
     "cheerio": "^0.22.0",
+    "colors": "^1.1.2",
     "express.js": "^1.0.0",
     "homedir": "^0.6.0",
+    "md5": "^2.2.1",
     "mkdirp": "^0.5.1",
+    "promised-cache": "^1.0.2",
     "random-useragent": "^0.3.0",
     "request": "^2.74.0",
     "striptags": "^2.1.1",

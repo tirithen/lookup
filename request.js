@@ -1,28 +1,23 @@
-const mkdirp = require('mkdirp');
-const homedir = require('homedir');
 const request = require('request');
-const cachedRequest = require('cached-request')(request);
+const appInfo = require('./package.json');
 
-const package = require('./package.json');
-const cacheDirectory = `${homedir()}/.lookup/cache`;
-const timeToRelease = 1000 * 3600 * 24 * 30;
-
-mkdirp.sync(cacheDirectory);
-cachedRequest.setCacheDirectory(cacheDirectory);
+const defaultTimeout = 5000;
 
 module.exports = (options) => {
   return new Promise((resolve, reject) => {
-    if (!options.ttl) {
-      options.ttl = timeToRelease;
-    }
-
     if (!options.headers) {
       options.headers = {};
     }
 
-    options.headers['User-Agent'] = `${package.name} Version: ${package.version} Author: ${package.author}`;
+    options.headers['User-Agent'] = `${appInfo.name} ` +
+                                    `v${appInfo.version} ` +
+                                    `created by ${appInfo.author}`;
 
-    cachedRequest(options, (error, response, body) => {
+    if (!options.timeout) {
+      options.timeout = defaultTimeout;
+    }
+
+    request(options, (error, response, body) => {
       if (error) {
         reject(error, response);
       } else {

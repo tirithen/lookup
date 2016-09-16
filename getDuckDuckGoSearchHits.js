@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const domainBlacklist = require('./domainBlacklist');
 const request = require('./request');
 const SearchResult = require('./SearchResult');
 
@@ -20,7 +21,14 @@ function getDuckDuckGoSearchHits(query) {
             $html.find('.result__snippet').text()
           );
 
-          if (result.isComplete()) {
+          let blacklisted = false;
+          domainBlacklist.forEach((domain) => {
+            if (!blacklisted && result.url.indexOf(domain) !== -1) {
+              blacklisted = true;
+            }
+          });
+
+          if (!blacklisted && result.isComplete()) {
             results.push(result);
           }
         });
