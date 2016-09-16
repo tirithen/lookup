@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const colors = require('colors');
-const lookup = require('./lookup');
+const lookupstuff = require('./lookupstuff');
 
 function getQuery() {
   return process.argv.slice(2).join(' ');
@@ -13,7 +13,7 @@ console.log(colors.bold(colors.white(
   `Looking up ${colors.yellow(query)}...`
 )));
 
-lookup(query).then((result) => {
+lookupstuff(query).then((result) => {
   console.log(colors.bold(colors.white(
     `Found result on ${colors.blue(result.url)}`
   )));

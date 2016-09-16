@@ -1,14 +1,15 @@
 {
-  "name": "lookup",
-  "version": "0.1.0",
-  "description": "Lookup information on any topic",
-  "main": "lookup.js",
+  "name": "lookupstuff",
+  "version": "0.2.0",
+  "description": "Look Up Stuff (lus) - gives you text only serarch engine power",
+  "main": "lookupstuff.js",
   "bin": {
-    "lookup": "./cli.js"
+    "lus": "./lookupstuff",
+    "lookupstuff": "./lookupstuff"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tirithen/lookup.git"
+    "url": "git+https://github.com/tirithen/lookupstuff.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,18 +17,16 @@
   "author": "Fredrik Söderström <fredrik.soderstrom@mojlighetsministeriet.se>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/tirithen/lookup/issues"
+    "url": "https://github.com/tirithen/lookupstuff/issues"
   },
-  "homepage": "https://github.com/tirithen/lookup#readme",
+  "homepage": "https://github.com/tirithen/lookupstuff#readme",
   "dependencies": {
     "cheerio": "^0.22.0",
     "colors": "^1.1.2",
-    "express.js": "^1.0.0",
     "homedir": "^0.6.0",
     "md5": "^2.2.1",
     "mkdirp": "^0.5.1",
     "promised-cache": "^1.0.2",
-    "random-useragent": "^0.3.0",
     "request": "^2.74.0",
     "striptags": "^2.1.1",
     "unfluff": "^1.1.0"
