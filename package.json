@@ -1,11 +1,11 @@
 {
   "name": "lookupstuff",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Look Up Stuff (lus) - gives you text only serarch engine power",
   "main": "lookupstuff.js",
   "bin": {
-    "lus": "./lookupstuff",
-    "lookupstuff": "./lookupstuff"
+    "lus": "./cli.js",
+    "lookupstuff": "./cli.js"
   },
   "repository": {
     "type": "git",
