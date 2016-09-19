@@ -9,27 +9,24 @@ const screen = blessed.screen({
 
 screen.title = 'my window title';
 
-const query = blessed.textbox({
+const queryPanel = blessed.textbox({
   parent: screen,
-  mouse: true,
-  keys: true,
   name: 'query',
   inputOnFocus: true,
   top: 0,
   width: '100%',
   height: 1,
   style: {
-    fg: 'yellow',
+    fg: 'white',
     bg: 'blue'
   }
 });
 
-// Create a box perfectly centered horizontally and vertically.
-const box = blessed.box({
+const contentPanel = blessed.box({
   tags: true,
   width: '100%',
-  height: screen.height - 1,
-  bottom: 0,
+  height: screen.height - 2,
+  bottom: 1,
   mouse: true,
   keys: true,
   alwaysScroll: true,
@@ -37,36 +34,61 @@ const box = blessed.box({
   scrollbar: true,
   style: {
     scrollbar: {
-      bg: 'red',
-      fg: 'blue'
+      bg: 'darkgray'
     }
   }
 });
 
+const statusPanel = blessed.box({
+  width: '100%',
+  height: 1,
+  bottom: 0,
+  style: {
+    fg: 'white',
+    bg: 'blue'
+  }
+});
+
+function updateStatusPanel(status, url, error) {
+  url = url ? '    URL: ' + url : '';
+  error = error ? '    Error: ' + error : '';
+  statusPanel.content = `Status: ${status}${url}${error}`;
+  screen.render();
+}
+
 screen.key(['enter'], () => {
-  query.focus();
-  lookupstuff(query.value).then((result) => {
-    box.content = result.url + '\n' + result.content;
-    query.focus();
+  updateStatusPanel('loading...');
+  lookupstuff(queryPanel.value).then((result) => {
+    contentPanel.content = result.content;
+    updateStatusPanel('done', result.url);
+    contentPanel.focus();
   }, (error) => {
-    box.content = error.message;
-    query.focus();
+    contentPanel.content = error.message;
+    updateStatusPanel('error');
+    queryPanel.focus();
   });
+
+  queryPanel.focus();
 });
 
 screen.on('resize', () => {
-  box.height = screen.height - 1;
+  contentPanel.height = screen.height - 2;
   screen.render();
 });
 
 // Append our box to the screen.
-screen.append(box);
+screen.append(contentPanel);
+screen.append(statusPanel);
 
 // Quit on Escape, q, or Control-C.
 screen.key(['escape', 'q', 'C-c'], () => process.exit(0));
 
+screen.key(['up', 'pageup', 'down', 'pagedown'], () => {
+  contentPanel.focus();
+});
+
 // Focus our element.
-query.focus();
+queryPanel.focus();
 
 // Render the screen.
 screen.render();
